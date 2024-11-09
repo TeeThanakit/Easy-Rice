@@ -1,0 +1,42 @@
+export const data = [
+	{
+		create_at: "2024-11-01 08:30:00",
+		key: "INS-1001",
+		address: "123 Elm Street, Springfield, IL",
+		name: "John Doe",
+		standard: "ISO 9001",
+		note: "First inspection, all clear",
+	},
+	{
+		create_at: "2024-11-03 10:00:00",
+		key: "INS-1003",
+		address: "789 Pine Road, Greenfield, TX",
+		name: "Alice Johnson",
+		standard: "ISO 27001",
+		note: "Inspection completed successfully",
+	},
+    {
+		create_at: "2024-11-02 09:45:00",
+		key: "INS-1002",
+		address: "456 Oak Avenue, Maple City, CA",
+		name: "Jane Smith",
+		standard: "ISO 14001",
+		note: "Minor issues, requires follow-up",
+	},
+	{
+		create_at: "2024-11-04 11:30:00",
+		key: "INS-1004",
+		address: "101 Maple Street, Rivertown, NY",
+		name: "Bob Brown",
+		standard: "ISO 45001",
+		note: "Safety concerns, needs attention",
+	},
+	{
+		create_at: "2024-11-05 14:15:00",
+		key: "INS-1005",
+		address: "202 Birch Lane, Lakeview, FL",
+		name: "Charlie White",
+		standard: "ISO 50001",
+		note: "Passed with no remarks",
+	},
+]
