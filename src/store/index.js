@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
+import riceInspectionReducer from "../pages/RiceInspection/riceInspectionSlice"
 
-// const data = useSelector((state) => state.${name})
 export const store = configureStore({
-	reducer: {  },
+	reducer: { riceInspection: riceInspectionReducer },
 })
