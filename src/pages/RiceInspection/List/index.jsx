@@ -10,7 +10,6 @@ import SearchBar from "../components/SearchBar"
 export default function InspectionList() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	const temp = useSelector((state) => state.riceInspection)
 	// console.log(temp)
 	const selectedRowKeys = useSelector((state) => state.riceInspection.selectRow.selectedRowKeys)
 	const onSelectChange = (newSelectedRowKeys) => {
@@ -23,7 +22,6 @@ export default function InspectionList() {
 
 	return (
 		<Flex vertical={true}>
-			{temp.data ? temp.data : "null"}
 			<Button className="bg-primary ml-auto" onClick={() => navigate("/createInspection")}>
 				+ Create Inspection
 			</Button>
