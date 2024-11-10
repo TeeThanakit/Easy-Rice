@@ -6,18 +6,19 @@ import { setSelectedRowKeys } from "../riceInspectionSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { data } from "../data"
 import SearchBar from "../components/SearchBar"
+import { deleteHistory } from "../riceInspectionAction"
 
 export default function InspectionList() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	// console.log(temp)
 	const selectedRowKeys = useSelector((state) => state.riceInspection.selectRow.selectedRowKeys)
 	const onSelectChange = (newSelectedRowKeys) => {
 		dispatch(setSelectedRowKeys(newSelectedRowKeys))
 	}
 
 	async function onDelete() {
-		console.log("Test")
+		console.log(selectedRowKeys)
+		dispatch(deleteHistory({ selectedRowKeys }))
 	}
 
 	return (

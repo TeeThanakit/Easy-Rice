@@ -13,6 +13,15 @@ export const getRiceInspectionListPage = createAsyncThunk(
 	},
 )
 
+export const getStandard = createAsyncThunk("/standard", async (_, { rejectWithValue }) => {
+	try {
+		const response = await axiosInstance.get("/standard")
+		return response.data
+	} catch (error) {
+		return rejectWithValue(error.response ? error.response.data : error.message)
+	}
+})
+
 export const getRiceInspectionById = createAsyncThunk("/history/:id", async ({ id }, { rejectWithValue }) => {
 	try {
 		const response = await axiosInstance.get(`/history/${id}`)
@@ -22,20 +31,25 @@ export const getRiceInspectionById = createAsyncThunk("/history/:id", async ({ i
 	}
 })
 
-export const fetchData = createAsyncThunk("data/fetchData", async (endpoint, { rejectWithValue }) => {
+export const editRiceInspection = createAsyncThunk("/history", async (payload, { rejectWithValue }) => {
 	try {
-		const response = await axiosInstance.get(endpoint)
+		const response = await axiosInstance.post("/history", payload)
 		return response.data
 	} catch (error) {
 		return rejectWithValue(error.response ? error.response.data : error.message)
 	}
 })
 
-// export const deleteHistory = createAsyncThunk("delete/history", async (endpoint, { rejectWithValue }) => {
-// 	try {
-// 		const response = await axiosInstance.get(endpoint)
-// 		return response.data
-// 	} catch (error) {
-// 		return rejectWithValue(error.response ? error.response.data : error.message)
-// 	}
-// })
+export const deleteHistory = createAsyncThunk(
+	"delete/history",
+	async ({ selectedRowKeys }, { rejectWithValue }) => {
+		try {
+			const response = await axiosInstance.delete("/history", {
+				data: { ids: selectedRowKeys },
+			})
+			return response.data
+		} catch (error) {
+			return rejectWithValue(error.response ? error.response.data : error.message)
+		}
+	},
+)

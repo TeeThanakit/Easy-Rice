@@ -1,19 +1,23 @@
 import { Button, Form, Input, Space, Select, InputNumber, Checkbox, DatePicker } from "antd"
-// import { useNavigate } from "react-router-dom"
 import { samplingPoints, dummyStandard } from "../components/const"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useEffect } from "react"
-import { getRiceInspectionById } from "../riceInspectionAction"
+import { editRiceInspection } from "../riceInspectionAction"
 import { useNavigate } from "react-router-dom"
 
 export default function RiceInspectionForm({ formType, id, data }) {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 	const [form] = Form.useForm()
 	useEffect(() => {
-		if (formType === "EDIT" && data && data.id) {
-			form.setFieldsValue({
-				id: data.id,
-			})
+		if (formType === "EDIT" && data) {
+			// wait data from API T.T
+			// form.setFieldsValue({
+			// 	note: data.id,
+			// 	price: temp,
+			// 	samplingPoint: temp,
+			// 	samplingDate: temp
+			// })
 		}
 	}, [])
 
@@ -21,15 +25,10 @@ export default function RiceInspectionForm({ formType, id, data }) {
 		if (formType === "CREATE") {
 			console.log("Create", data)
 		} else if (formType === "EDIT") {
-			console.log("Edit", data)
+			dispatch(editRiceInspection({ data, id }))
 		}
 	}
 
-	function onCancel() {
-		form.resetFields() // Reset form values
-		navigate("/")
-	}
-	// form={form}
 	return (
 		<div>
 			<Form form={form} onFinish={onSubmit} layout="vertical" autoComplete="off">
@@ -61,7 +60,7 @@ export default function RiceInspectionForm({ formType, id, data }) {
 								showSearch
 								placeholder="Please Select Standard"
 								optionFilterProp="label"
-								options={dummyStandard}
+								options={data.name}
 							/>
 						</Form.Item>
 						<Form.Item label="Uploade File" name="uploadeFile">
@@ -70,9 +69,6 @@ export default function RiceInspectionForm({ formType, id, data }) {
 					</>
 				)}
 				<Form.Item label="Note" name="note">
-					<Input />
-				</Form.Item>
-				<Form.Item label="Test Id" name="id">
 					<Input />
 				</Form.Item>
 				<Form.Item label="Price" name="price">
@@ -100,7 +96,7 @@ export default function RiceInspectionForm({ formType, id, data }) {
 				<div className="flex justify-end">
 					<Space>
 						<Form.Item>
-							<Button onClick={() => onCancel()}>Cancel</Button>
+							<Button onClick={() => navigate("/")}>Cancel</Button>
 						</Form.Item>
 						<Form.Item>
 							<Button type="primary" htmlType="submit">
