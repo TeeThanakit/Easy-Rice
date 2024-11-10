@@ -4,10 +4,14 @@ import { Spin } from "antd"
 
 const InspectionList = lazy(() => import("./pages/RiceInspection/List"))
 const CreateInspection = lazy(() => import("./pages/RiceInspection/Create"))
+const RiceInspectionViewById = lazy(() => import("./pages/RiceInspection/View"))
+const EditRiceInspection = lazy(() => import("./pages/RiceInspection/Edit"))
 
 const routes = [
 	{ path: "/", element: <InspectionList />, index: true },
 	{ path: "/createInspection", element: <CreateInspection /> },
+	{ path: "/history/:id", element: <RiceInspectionViewById /> },
+	{ path: "/edit/:id", element: <EditRiceInspection /> },
 ]
 
 export default function Router() {

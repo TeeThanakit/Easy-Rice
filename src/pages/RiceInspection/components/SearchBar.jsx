@@ -1,17 +1,20 @@
 import { Button, Form, Input, Flex } from "antd"
-import { clearSearchBar, setSearchBar } from "../riceInspectionSlice"
+import { clearSearchBar } from "../riceInspectionSlice"
 import { useDispatch } from "react-redux"
 import { SearchOutlined } from "@ant-design/icons"
+import { getRiceInspectionListPage } from "../riceInspectionAction"
+import { useEffect } from "react"
 
 export default function SearchBar() {
 	const dispatch = useDispatch()
 	const [form] = Form.useForm()
-	// const data = useSelector((state) => state.riceInspection);
-	// console.log(data);
+
+	useEffect(() => {
+		dispatch(getRiceInspectionListPage({ endpoint: "/history", params: "" }))
+	}, [])
 
 	async function onSubmit(data) {
-		dispatch(setSearchBar(data))
-		console.log(data)
+		dispatch(getRiceInspectionListPage({ endpoint: "/history", params: data }))
 	}
 
 	async function clearData() {

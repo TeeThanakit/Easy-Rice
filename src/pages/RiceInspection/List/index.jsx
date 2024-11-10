@@ -10,15 +10,20 @@ import SearchBar from "../components/SearchBar"
 export default function InspectionList() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-
+	const temp = useSelector((state) => state.riceInspection)
+	// console.log(temp)
 	const selectedRowKeys = useSelector((state) => state.riceInspection.selectRow.selectedRowKeys)
 	const onSelectChange = (newSelectedRowKeys) => {
 		dispatch(setSelectedRowKeys(newSelectedRowKeys))
 	}
 
-	// console.log(selectedRowKeys.length)
+	async function onDelete() {
+		console.log("Test")
+	}
+
 	return (
 		<Flex vertical={true}>
+			{temp.data ? temp.data : "null"}
 			<Button className="bg-primary ml-auto" onClick={() => navigate("/createInspection")}>
 				+ Create Inspection
 			</Button>
@@ -26,7 +31,7 @@ export default function InspectionList() {
 			<div className="h-10">
 				{selectedRowKeys.length > 0 ? (
 					<Flex className="gap-5">
-						<Button>Delete</Button>
+						<Button onClick={() => onDelete()}>Delete</Button>
 						<p>
 							Select items: {selectedRowKeys.length} {selectedRowKeys.length > 1 ? "items" : "item"}
 						</p>

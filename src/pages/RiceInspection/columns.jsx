@@ -1,3 +1,15 @@
+import { Button } from "antd"
+import { useNavigate } from "react-router-dom"
+
+const EditButton = ({ id }) => {
+	const navigate = useNavigate()
+	return (
+		<Button type="second" onClick={() => navigate(`/history/${id}`)}>
+			Edit
+		</Button>
+	)
+}
+
 export const columns = [
 	{
 		title: "Create Date - Time",
@@ -23,5 +35,10 @@ export const columns = [
 		title: "Note",
 		dataIndex: "note",
 		key: "note",
+	},
+	{
+		title: "",
+		key: "action",
+		render: (_, record) => <EditButton id={record.key} />,
 	},
 ]
