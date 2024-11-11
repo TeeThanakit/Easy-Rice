@@ -47,12 +47,12 @@ export default function RiceInspectionForm({ formType, id, data }) {
 							<Input />
 						</Form.Item>
 						<Form.Item
-							label="Select"
-							name="Select"
+							label="Standard"
+							name="standard"
 							rules={[
 								{
 									required: true,
-									message: "Please select standard",
+									message: "Please Select standard",
 								},
 							]}
 						>
@@ -60,7 +60,7 @@ export default function RiceInspectionForm({ formType, id, data }) {
 								showSearch
 								placeholder="Please Select Standard"
 								optionFilterProp="label"
-								options={data.name}
+								options={data}
 							/>
 						</Form.Item>
 						<Form.Item label="Uploade File" name="uploadeFile">
