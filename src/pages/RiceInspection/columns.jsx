@@ -5,7 +5,7 @@ const EditButton = ({ id }) => {
 	const navigate = useNavigate()
 	return (
 		<Button type="second" onClick={() => navigate(`/history/${id}`)}>
-			Edit
+			View
 		</Button>
 	)
 }
