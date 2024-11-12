@@ -4,26 +4,31 @@ import { Table, Flex } from "antd"
 import { columns } from "../columns"
 import { setSelectedRowKeys } from "../riceInspectionSlice"
 import { useDispatch, useSelector } from "react-redux"
-import { data } from "../data"
 import SearchBar from "../components/SearchBar"
-import { deleteHistory } from "../riceInspectionAction"
+import { deleteHistory, getRiceInspectionListPage } from "../riceInspectionAction"
+import { useEffect } from "react"
 
 export default function InspectionList() {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	const selectedRowKeys = useSelector((state) => state.riceInspection.selectRow.selectedRowKeys)
+	const inspectionData = useSelector((state) => state.riceInspection)
+	const selectedRowKeys = inspectionData.selectRow.selectedRowKeys
+
+	useEffect(() => {
+		dispatch(getRiceInspectionListPage({ endpoint: "/history", params: "" }))
+	}, [])
+
 	const onSelectChange = (newSelectedRowKeys) => {
 		dispatch(setSelectedRowKeys(newSelectedRowKeys))
 	}
 
 	async function onDelete() {
-		console.log(selectedRowKeys)
 		dispatch(deleteHistory({ selectedRowKeys }))
 	}
 
 	return (
 		<Flex vertical={true}>
-			<Button className="bg-primary ml-auto" onClick={() => navigate("/createInspection")}>
+			<Button className="bg-primary ml-auto my-5" onClick={() => navigate("/createInspection")}>
 				+ Create Inspection
 			</Button>
 			<SearchBar />
@@ -45,7 +50,7 @@ export default function InspectionList() {
 					onChange: onSelectChange,
 				}}
 				columns={columns}
-				dataSource={data}
+				dataSource={inspectionData.list}
 			/>
 		</Flex>
 	)

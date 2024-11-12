@@ -15,11 +15,10 @@ export default function InspectionForm() {
 		getStandardList()
 	}, [])
 	const data = useSelector((state) => state.riceInspection)
-	console.log(data.standard)
 	return (
-		<div>
-			<h1>Create Inspection</h1>
+		<>
+			<h1 className="text-4xl text-center my-5">Create Inspection</h1>
 			<RiceInspectionForm formType={"CREATE"} form={form} data={data.standard} />
-		</div>
+		</>
 	)
 }

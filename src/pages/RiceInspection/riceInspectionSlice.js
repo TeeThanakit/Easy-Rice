@@ -5,15 +5,18 @@ import {
 	editRiceInspection,
 	deleteHistory,
 	getStandard,
+	createRiceInspection,
 } from "./riceInspectionAction"
 
 const initialState = {
 	loading: false,
 	selectRow: { selectedRowKeys: [] },
 	data: null,
+	list: null,
 	standard: "",
 	searchBar: "",
 	error: null,
+	message: "",
 }
 
 const riceInspection = createSlice({
@@ -38,7 +41,7 @@ const riceInspection = createSlice({
 			})
 			.addCase(getRiceInspectionListPage.fulfilled, (state, action) => {
 				state.loading = false
-				state.data = action.payload
+				state.list = action.payload
 			})
 			.addCase(getRiceInspectionListPage.rejected, (state, action) => {
 				state.loading = false
@@ -83,6 +86,19 @@ const riceInspection = createSlice({
 				state.error = action.payload || "Failed to fetch data"
 			})
 		builder
+			.addCase(createRiceInspection.pending, (state) => {
+				state.loading = true
+				state.error = null
+			})
+			.addCase(createRiceInspection.fulfilled, (state, action) => {
+				state.loading = false
+				state.message = action.payload
+			})
+			.addCase(createRiceInspection.rejected, (state, action) => {
+				state.loading = false
+				state.error = action.payload || "Failed to create rice inspection"
+			})
+		builder
 			.addCase(deleteHistory.pending, (state) => {
 				state.loading = true
 				state.error = null
@@ -92,7 +108,7 @@ const riceInspection = createSlice({
 			})
 			.addCase(deleteHistory.rejected, (state, action) => {
 				state.loading = false
-				state.error = action.payload || "Failed to fetch data"
+				state.error = action.payload || "Failed to delete data"
 			})
 	},
 })

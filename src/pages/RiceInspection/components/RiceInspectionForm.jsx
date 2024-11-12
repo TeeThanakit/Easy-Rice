@@ -1,36 +1,48 @@
-import { Button, Form, Input, Space, Select, InputNumber, Checkbox, DatePicker } from "antd"
-import { samplingPoints, dummyStandard } from "../components/const"
+import { Button, Upload, Form, Input, Space, Select, InputNumber, Checkbox, DatePicker } from "antd"
+import { samplingPoints } from "../components/const"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
-import { editRiceInspection } from "../riceInspectionAction"
+import { UploadOutlined } from "@ant-design/icons"
+import { editRiceInspection, createRiceInspection } from "../riceInspectionAction"
 import { useNavigate } from "react-router-dom"
+import moment from "moment"
 
 export default function RiceInspectionForm({ formType, id, data }) {
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const [form] = Form.useForm()
+	
+	const onFileUpload = (file) => {
+		const reader = new FileReader()
+		reader.onload = (e) => {
+			const json = JSON.parse(e.target.result)
+			console.log(json)
+		}
+		reader.readAsText(file)
+		return false
+	}
+
 	useEffect(() => {
 		if (formType === "EDIT" && data) {
-			// wait data from API T.T
-			// form.setFieldsValue({
-			// 	note: data.id,
-			// 	price: temp,
-			// 	samplingPoint: temp,
-			// 	samplingDate: temp
-			// })
+			form.setFieldsValue({
+				note: data.note,
+				price: data.price,
+				samplingPoint: data.samplingPoint,
+				samplingDate: data?.samplingDate ? moment(data.samplingDate) : null,
+			})
 		}
 	}, [])
 
 	async function onSubmit(data) {
 		if (formType === "CREATE") {
-			console.log("Create", data)
+			dispatch(createRiceInspection({ data, actionType: formType }))
 		} else if (formType === "EDIT") {
-			dispatch(editRiceInspection({ data, id }))
+			dispatch(editRiceInspection({ data, id, actionType: formType }))
 		}
 	}
 
 	return (
-		<div>
+		<div className="p-4 w-3/5 mx-auto">
 			<Form form={form} onFinish={onSubmit} layout="vertical" autoComplete="off">
 				{formType === "CREATE" && (
 					<>
@@ -63,8 +75,10 @@ export default function RiceInspectionForm({ formType, id, data }) {
 								options={data}
 							/>
 						</Form.Item>
-						<Form.Item label="Uploade File" name="uploadeFile">
-							<Input />
+						<Form.Item label="Upload JSON File" name="uploadFile">
+							<Upload beforeUpload={onFileUpload}>
+								<Button icon={<UploadOutlined />}>Click to Upload</Button>
+							</Upload>
 						</Form.Item>
 					</>
 				)}
@@ -96,7 +110,7 @@ export default function RiceInspectionForm({ formType, id, data }) {
 				<div className="flex justify-end">
 					<Space>
 						<Form.Item>
-							<Button onClick={() => navigate("/")}>Cancel</Button>
+							<Button onClick={() => navigate(formType === "EDIT" ? `/history/${id}` : "/")}>Cancel</Button>
 						</Form.Item>
 						<Form.Item>
 							<Button type="primary" htmlType="submit">

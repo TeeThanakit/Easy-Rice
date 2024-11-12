@@ -12,18 +12,3 @@ export const samplingPoints = [
 		value: "Other",
 	},
 ]
-
-export const dummyStandard = [
-	{
-		value: "jack",
-		label: "Jack",
-	},
-	{
-		value: "lucy",
-		label: "Lucy",
-	},
-	{
-		value: "tom",
-		label: "Tom",
-	},
-]
